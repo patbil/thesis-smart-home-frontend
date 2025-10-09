@@ -1,0 +1,48 @@
+<div class="h-100 w-100 d-flex justify-content-center align-items-center">
+
+    <mat-card class="card my-3">
+        <h1 class="text-center mt-2">Witaj!</h1>
+        <div class="description">
+            <p class="text-center pb-3">Zaloguj się, aby móc w pełni korzystać ze strony.</p>
+        </div>
+
+        <form class="form" [formGroup]="loginForm" (submit)="onSubmit()">
+            <mat-form-field appearance="fill" class="pb-2">
+                <mat-label>Wprowadź adres e-mail</mat-label>
+                <input matInput type="email" id="email" formControlName="email" autocomplete="off" />
+
+                <mat-error *ngIf="this.f['email'].hasError('required')">
+                    Adres e-mail jest wymagany.
+                </mat-error>
+                <mat-error *ngIf="this.f['email'].hasError('email')">
+                    Adres e-mail jest nieprawidłowy.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="pb-2">
+                <mat-label>Wprowadź hasło</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" id="password" formControlName="password"
+                    autocomplete="off" minlength="8">
+                <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+
+                <mat-error *ngIf="this.f['password'].hasError('required')">
+                    Hasło jest wymagane.
+                </mat-error>
+                <mat-error *ngIf="this.f['password'].hasError('minlength')">
+                    Hasło jest za krótkie.
+                </mat-error>
+                <mat-error *ngIf="this.f['password'].hasError('maxlength')">
+                    Hasło jest za długie.
+                </mat-error>
+                <mat-error *ngIf="loginForm.errors?.['unauthenticated']" class="text-center">
+                    Hasło lub nazwa użytkownika jest nieprawidłowa.
+                </mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="dark" class="my-3" type="submit">Zaloguj</button>
+        </form>
+    </mat-card>
+</div>

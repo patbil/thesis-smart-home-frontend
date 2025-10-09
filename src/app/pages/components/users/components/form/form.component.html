@@ -1,0 +1,224 @@
+<div
+  class="container-fluid h-100 w-100 d-flex align-items-center justify-content-center"
+>
+  <mat-card class="mat-elevation-z5 py-5">
+    <mat-card-header class="d-flex justify-content-center">
+      <mat-card-title *ngIf="isAddMode" class="text-dark"
+        >Dodaj użytkownika</mat-card-title
+      >
+      <mat-card-title *ngIf="!isAddMode" class="text-dark"
+        >Modyfikuj użytkownika</mat-card-title
+      >
+    </mat-card-header>
+
+    <mat-card-content class="pt-4">
+      <div
+        class="d-flex flex-row justify-content-end pb-4 mx-3"
+        *ngIf="!isAddMode"
+      >
+        <mat-slide-toggle [(ngModel)]="isChecked" (change)="onToggle()"
+          >Zmiana hasła</mat-slide-toggle
+        >
+      </div>
+
+      <form [formGroup]="userForm" class="mx-3 pb-3" (ngSubmit)="onSubmit()">
+        <div
+          class="d-flex justify-content-center flex-column-reverse flex-md-row"
+        >
+          <mat-form-field appearance="fill" class="me-3 mb-2 order-1">
+            <mat-label>Wprowadź imię</mat-label>
+            <input
+              matInput
+              type="text"
+              id="name"
+              formControlName="name"
+              autocomplete="off"
+            />
+
+            <mat-error *ngIf="this.f['name'].hasError('required')">
+              Imię jest wymagane.
+            </mat-error>
+            <mat-error *ngIf="this.f['name'].hasError('minlength')">
+              Imie jest za krótkie.
+            </mat-error>
+            <mat-error *ngIf="this.f['name'].hasError('maxlength')">
+              Imie jest zbyt długie.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="mb-2 order-2">
+            <mat-label>Wprowadź nazwisko</mat-label>
+            <input
+              matInput
+              type="text"
+              id="surname"
+              formControlName="surname"
+              autocomplete="off"
+            />
+
+            <mat-error *ngIf="this.f['surname'].hasError('required')">
+              Nazwisko jest wymagane.
+            </mat-error>
+            <mat-error *ngIf="this.f['surname'].hasError('minlength')">
+              Nazwisko jest za krótkie.
+            </mat-error>
+            <mat-error *ngIf="this.f['surname'].hasError('maxlength')">
+              Nazwisko jest za długie.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div
+          class="d-flex justify-content-center flex-md-row flex-column-reverse"
+        >
+          <mat-form-field appearance="fill" class="me-3 mb-2 order-3">
+            <mat-label>Wprowadź nazwę użytkownika</mat-label>
+            <input
+              matInput
+              type="text"
+              id="username"
+              formControlName="username"
+              autocomplete="off"
+            />
+
+            <mat-error *ngIf="this.f['username'].hasError('required')">
+              Nazwa użytkownika jest wymagana.
+            </mat-error>
+            <mat-error *ngIf="this.f['username'].hasError('usernameTaken')">
+              Nazwa użytkownika jest już zajęta.
+            </mat-error>
+            <mat-error *ngIf="this.f['username'].hasError('minlength')">
+              Nazwa użytkownika jest za krótka.
+            </mat-error>
+            <mat-error *ngIf="this.f['username'].hasError('maxlength')">
+              Nazwa użytkownika jest zbyt długa.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="mb-2 order-4">
+            <mat-label>Wprowadź adres e-mail</mat-label>
+            <input
+              matInput
+              type="email"
+              id="email"
+              formControlName="email"
+              autocomplete="off"
+            />
+
+            <mat-error *ngIf="this.f['email'].hasError('required')">
+              Adres e-mail jest wymagany.
+            </mat-error>
+            <mat-error *ngIf="this.f['email'].hasError('email')">
+              Niepoprawny adres e-mail.
+            </mat-error>
+            <mat-error *ngIf="this.f['email'].hasError('emailTaken')">
+              Istnieje konto z podanym adresem e-mail.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div
+          class="d-flex justify-content-center flex-md-row flex-column-reverse"
+          *ngIf="isAddMode || (!isAddMode && isChecked)"
+        >
+          <mat-form-field appearance="fill" class="me-3 mb-2 order-6">
+            <mat-label>Wprowadź hasło</mat-label>
+            <input
+              matInput
+              [type]="hide ? 'password' : 'text'"
+              id="password"
+              formControlName="password"
+              autocomplete="off"
+              minlength="8"
+            />
+            <button
+              class="eye-icon"
+              type="button"
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+
+            <mat-error *ngIf="this.f['password'].hasError('required')">
+              Hasło jest wymagane.
+            </mat-error>
+            <mat-error *ngIf="this.f['password'].hasError('minlength')">
+              Hasło jest za krótkie.
+            </mat-error>
+            <mat-error *ngIf="this.f['password'].hasError('mustMatch')">
+              Hasła są niezgodne.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="mb-2 order-7">
+            <mat-label>Powtórz hasło</mat-label>
+            <input
+              matInput
+              [type]="hide_confirm ? 'password' : 'text'"
+              id="password_confirm"
+              formControlName="password_confirm"
+              autocomplete="off"
+              minlength="8"
+            />
+            <button
+              class="eye-icon"
+              type="button"
+              mat-icon-button
+              matSuffix
+              (click)="hide_confirm = !hide_confirm"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide_confirm"
+            >
+              <mat-icon>{{
+                hide_confirm ? "visibility_off" : "visibility"
+              }}</mat-icon>
+            </button>
+
+            <mat-error *ngIf="this.f['password_confirm'].hasError('required')">
+              Potwierdź hasło.
+            </mat-error>
+            <mat-error *ngIf="this.f['password_confirm'].hasError('mustMatch')">
+              Hasła są niezgodne.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div
+          class="d-flex justify-content-center flex-md-row flex-column-reverse"
+        >
+          <div class="col-md-6 col-sm-12 mb-4">
+            <mat-form-field appearance="fill" class="order-8">
+              <mat-label>Rola użytkownika</mat-label>
+              <mat-select matInput formControlName="role" id="role">
+                <mat-option value="Admin" selected>Admin</mat-option>
+                <mat-option value="User">User</mat-option>
+              </mat-select>
+
+              <mat-error *ngIf="this.f['role'].hasError('required')">
+                Rola jest wymagana.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <button mat-raised-button color="black" type="submit" class="me-3">
+            Zapisz
+          </button>
+          <button
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="return()"
+          >
+            Anuluj
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,327 @@
+<div class="container-fluid d-flex justify-content-center">
+  <div class="d-flex row w-100">
+    <section class="col-xl-8 col-md-12 p-2 mb-1">
+      <div class="d-flex w-100">
+        <h1>Witaj, {{ username }}</h1>
+      </div>
+
+      <div class="d-flex row">
+        <div class="col-12 col-sm-4">
+          <mat-card class="mat-elevation-z5">
+            <mat-card-header class="d-flex justify-content-start">
+              <mat-card-title class="align-items-center d-flex">
+                <mat-icon>device_thermostat</mat-icon> Temperatura wewnątrz
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content
+              class="d-flex justify-content-center align-items-center py-4"
+            >
+              <ngx-gauge
+                [size]="90"
+                [max]="50"
+                [min]="-50"
+                [thresholds]="config.temp"
+                type="semi"
+                [value]="temp"
+                label="Temperatura"
+                append="°C"
+              >
+              </ngx-gauge>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="mat-elevation-z5">
+            <mat-card-header class="d-flex justify-content-start">
+              <mat-card-title class="d-flex align-items-center">
+                <mat-icon class="me-2">water_damage</mat-icon> Wilgotność
+                wewnątrz
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content
+              class="d-flex justify-content-center align-items-center py-4"
+            >
+              <ngx-gauge
+                [size]="90"
+                [max]="100"
+                [thresholds]="config.hum"
+                type="semi"
+                [value]="hum"
+                label="Wilgotność"
+                append="%"
+              >
+              </ngx-gauge>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="col-12 col-sm-8 d-flex justify-content-start">
+          <div class="col-12 col-sm-11 h-100 pb-2">
+            <mat-card class="mat-elevation-z5 current">
+              <mat-card-header class="d-flex justify-content-start">
+                <mat-card-title class="d-flex align-items-center">
+                  <mat-icon class="me-2">cloud</mat-icon> Pogoda - Dobrut
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content
+                class="d-flex h-100 justify-content-center align-items-center"
+              >
+                <div class="col-12 h-100">
+                  <div class="d-flex row h-50">
+                    <div
+                      class="col-6 d-flex justify-content-center align-items-center"
+                    >
+                      <ngx-gauge
+                        [size]="120"
+                        [max]="50"
+                        [min]="-50"
+                        [thresholds]="config.temp"
+                        type="semi"
+                        [value]="weather?.main.temp"
+                        label="Temperatura"
+                        append="°C"
+                      >
+                      </ngx-gauge>
+                    </div>
+                    <div
+                      class="col-6 d-flex justify-content-center align-items-center"
+                    >
+                      <ngx-gauge
+                        [size]="120"
+                        [max]="100"
+                        [thresholds]="config.hum"
+                        type="semi"
+                        [value]="weather?.main.humidity"
+                        label="Wilgotność"
+                        append="%"
+                      >
+                      </ngx-gauge>
+                    </div>
+                  </div>
+                  <div class="d-flex row">
+                    <div
+                      class="col-6 d-flex justify-content-center align-items-center"
+                    >
+                      <ngx-gauge
+                        [size]="120"
+                        [max]="1050"
+                        [thresholds]="config.pressure"
+                        type="semi"
+                        [value]="weather?.main.pressure"
+                        label="Ciśnienie"
+                        append="hPa"
+                      >
+                      </ngx-gauge>
+                    </div>
+                    <div
+                      class="col-6 d-flex justify-content-center align-items-center"
+                    >
+                      <ngx-gauge
+                        [size]="120"
+                        [max]="150"
+                        [thresholds]="config.wind"
+                        type="semi"
+                        [value]="weather?.wind.speed"
+                        label="Prędkość wiatru"
+                        append="km/h"
+                      >
+                      </ngx-gauge>
+                    </div>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex row lighting-container pt-2">
+        <mat-card class="mat-elevation-z5 w-100">
+          <mat-card-header>
+            <mat-card-title class="align-items-center d-flex">
+              <mat-icon class="me-1">lightbulb</mat-icon> Oświetlenie
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content
+            class="d-flex row justify-content-between align-items-center py-2 px-1"
+          >
+            <div class="col-12 col-md-5 border-end">
+              <h4 class="text-center">Oświetlenie wewnątrz</h4>
+              <div class="row d-flex justify-content-around p-2">
+                <mat-card
+                  class="col-12 col-md-5 lighting-card mb-3 mat-elevation-z3"
+                >
+                  <mat-card-subtitle class="lighting-title">
+                    <mat-icon class="lighting-icon">home</mat-icon> Wszystkie
+                  </mat-card-subtitle>
+                  <mat-card-content class="d-flex justify-content-end m-2">
+                    <div class="col-5">
+                      <mat-slide-toggle
+                        (change)="changeAllIn($event.checked)"
+                        color="primary"
+                        [checked]="state.allIn"
+                      >
+                      </mat-slide-toggle>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+
+                <mat-card
+                  class="col-12 col-md-5 lighting-card mat-elevation-z3 mb-3"
+                  *ngFor="let lin of lightingIn"
+                >
+                  <mat-card-subtitle class="lighting-title">
+                    <mat-icon class="lighting-icon">home</mat-icon>
+                    {{ lin.name }}
+                  </mat-card-subtitle>
+                  <mat-card-content
+                    class="d-flex justify-content-end align-items-center m-2"
+                  >
+                    <div class="col-5">
+                      <mat-slide-toggle
+                        #toggleIn
+                        (change)="changeLightState($event.checked, lin.name)"
+                        color="primary"
+                        [checked]="lin.state ? true : false"
+                      >
+                      </mat-slide-toggle>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-7">
+              <h4 class="text-center">Oświetlenie zewnętrzne</h4>
+              <div class="row d-flex justify-content-around p-2">
+                <mat-card
+                  class="col-12 col-sm-5 col-lg-3 lighting-card mb-3 mat-elevation-z3"
+                >
+                  <mat-card-subtitle class="lighting-title">
+                    <mat-icon class="lighting-icon">forest</mat-icon> Wszystkie
+                  </mat-card-subtitle>
+                  <mat-card-content class="d-flex justify-content-end m-2">
+                    <div class="col-5">
+                      <mat-slide-toggle
+                        (change)="changeAllOut($event.checked)"
+                        color="primary"
+                        [checked]="state.allOut"
+                      >
+                      </mat-slide-toggle>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+
+                <mat-card
+                  class="col-12 col-sm-5 col-lg-3 lighting-card mat-elevation-z3 mb-3"
+                  *ngFor="let lout of lightingOut"
+                >
+                  <mat-card-subtitle class="lighting-title">
+                    <mat-icon class="lighting-icon">forest</mat-icon>
+                    {{ lout.name }}
+                  </mat-card-subtitle>
+                  <mat-card-content class="d-flex justify-content-end">
+                    <div class="col-5">
+                      <mat-slide-toggle
+                        #toggleOut
+                        (change)="changeLightState($event.checked, lout.name)"
+                        color="primary"
+                        [checked]="lout.state ? true : false"
+                      >
+                      </mat-slide-toggle>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </section>
+
+    <section class="col-xl-4 col-md-12 mt-2">
+      <div class="pt-lg-5 pt-md-2">
+        <mat-card class="mat-elevation-z5 gradient-card pe-3 pe-md-0">
+          <mat-card-content
+            class="d-flex row justify-content-between align-items-center pt-2 pb-3 px-2"
+          >
+            <div class="col-2 d-flex">
+              <mat-icon class="me-1">sensors</mat-icon>
+            </div>
+            <div class="col-2 d-flex">
+              <mat-slide-toggle
+                (change)="changeSensorState($event.checked)"
+                color="primary"
+                [checked]="state.sensor"
+              >
+              </mat-slide-toggle>
+            </div>
+          </mat-card-content>
+          <mat-card-subtitle
+            >Po wykryciu promieni słonecznych zostaną zasunięte
+            rolety.</mat-card-subtitle
+          >
+          <mat-card-subtitle
+            ><strong>Czujnik światła</strong>
+          </mat-card-subtitle>
+        </mat-card>
+
+        <mat-card class="mat-elevation-z5 gradient-card">
+          <mat-card-content
+            class="d-flex row justify-content-between align-items-center pt-2 pb-3 px-2"
+          >
+            <div class="col-2 d-flex">
+              <mat-icon class="me-1">security</mat-icon>
+            </div>
+            <div class="col-2 d-flex">
+              <mat-slide-toggle
+                (change)="changeDetectorState($event.checked)"
+                color="primary"
+                [checked]="state.detector"
+              >
+              </mat-slide-toggle>
+            </div>
+          </mat-card-content>
+          <mat-card-subtitle
+            >Uruchomienie systemu antywłamaniowego.</mat-card-subtitle
+          >
+          <mat-card-subtitle
+            ><strong>System bezpieczeństwa</strong>
+          </mat-card-subtitle>
+        </mat-card>
+
+        <mat-card class="mat-elevation-z5 gradient-card">
+          <mat-card-content class="d-flex row justify-content-start">
+            <div class="col-2 mx-2 my-4">
+              <mat-icon>lock_open</mat-icon>
+            </div>
+            <div class="row d-flex justify-content-center">
+              <mat-card
+                class="servos-card mat-elevation-z5 col-lg-4 m-1"
+                *ngFor="let servo of servos"
+              >
+                <mat-card-subtitle>
+                  {{ servo.name }}
+                </mat-card-subtitle>
+                <mat-card-content class="d-flex justify-content-end">
+                  <mat-slide-toggle
+                    (change)="changeServoState($event.checked, servo)"
+                    color="primary"
+                    [checked]="servo.state ? true : false"
+                  >
+                  </mat-slide-toggle>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </mat-card-content>
+          <mat-card-subtitle
+            >Sekcja przeznaczona do zdalnego sterowania
+            bramą/drzwiami.</mat-card-subtitle
+          >
+          <mat-card-subtitle
+            ><strong>Sterowanie drzwiami/bramą</strong>
+          </mat-card-subtitle>
+        </mat-card>
+      </div>
+    </section>
+  </div>
+</div>

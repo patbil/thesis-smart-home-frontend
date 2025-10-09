@@ -1,0 +1,77 @@
+<div class="header-container mat-elevation-z8">
+  <mat-toolbar>
+    <button
+      mat-icon-button
+      *ngIf="sidenav.mode === 'over'"
+      (click)="sidenav.toggle()"
+    >
+      <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+      <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+    </button>
+
+    <a routerLink="/home"
+      ><img src="assets/logo.png" alt="logo" class="logo"
+    /></a>
+  </mat-toolbar>
+</div>
+
+<mat-sidenav-container autosize>
+  <mat-sidenav class="mat-elevation-z8" #sidenav mode="side" opened="true">
+    <mat-nav-list>
+      <mat-list-item
+        routerLink="/home"
+        *ngIf="authService.isLogged"
+        [routerLinkActive]="['is-active']"
+        matTooltip="Dashboard"
+        matTooltipPosition="after"
+      >
+        <mat-icon mat-list-icon>dashboard</mat-icon>
+      </mat-list-item>
+
+      <mat-list-item
+        routerLink="/reports"
+        *ngIf="authService.isLogged"
+        [routerLinkActive]="['is-active']"
+        matTooltip="Statystyki"
+        matTooltipPosition="after"
+      >
+        <mat-icon mat-list-icon>insert_chart</mat-icon>
+      </mat-list-item>
+
+      <mat-list-item
+        routerLink="/users"
+        *ngIf="authService.isLogged"
+        [routerLinkActive]="['is-active']"
+        matTooltip="Użytkownicy"
+        matTooltipPosition="after"
+      >
+        <mat-icon mat-list-icon>people</mat-icon>
+      </mat-list-item>
+
+      <mat-list-item
+        routerLink="login"
+        *ngIf="!authService.isLogged"
+        [routerLinkActive]="['is-active']"
+        matTooltip="Zaloguj"
+        matTooltipPosition="after"
+      >
+        <mat-icon mat-list-icon>login</mat-icon>
+      </mat-list-item>
+
+      <mat-list-item
+        matTooltip="Wyloguj"
+        *ngIf="authService.isLogged"
+        matTooltipPosition="after"
+        (click)="logout()"
+      >
+        <mat-icon mat-list-icon>logout</mat-icon>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z8">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

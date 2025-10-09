@@ -1,0 +1,28 @@
+<h1 mat-dialog-title class="text-center">{{ data.title }}</h1>
+
+<div mat-dialog-content class="text-center">
+  <p>{{ data.info }}</p>
+</div>
+
+<div mat-dialog-actions class="justify-content-end" *ngIf="data.delete">
+  <button mat-raised-button color="red" mat-dialog-close>Anuluj</button>
+  <button
+    mat-raised-button
+    color="success"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+  >
+    Potwierdź
+  </button>
+</div>
+
+<div mat-dialog-actions class="justify-content-end" *ngIf="!data.delete">
+  <button
+    mat-raised-button
+    color="success"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+  >
+    Ok
+  </button>
+</div>

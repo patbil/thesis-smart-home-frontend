@@ -1,0 +1,14 @@
+.mat-success {
+  background-color: green;
+  color: white;
+}
+
+.mat-red {
+  background-color: red;
+  color: white;
+}
+
+::ng-deep mat-dialog-container {
+  background-color: white !important;
+  color: black !important;
+}

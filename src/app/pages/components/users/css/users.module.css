@@ -1,0 +1,107 @@
+:host {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: start;
+  padding: 15px 15px 15px 15px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+.mat-gradient {
+  background: linear-gradient(
+    to right,
+    rgb(173, 83, 137),
+    rgb(60, 16, 83)
+  ) !important;
+  color: white;
+}
+
+.table-container {
+  border-radius: 15px !important;
+}
+
+table {
+  width: 100%;
+  background: white !important;
+  border-radius: 15px !important;
+}
+
+tr.mat-header-row {
+  border-radius: 15px !important;
+}
+
+.mat-paginator {
+  background: white !important;
+  color: gray !important;
+  border-radius: 15px;
+}
+
+.mat-cell {
+  color: gray;
+  border-color: darkgray;
+  text-align: center;
+  word-wrap: break-word !important;
+  width: 16.5% !important;
+}
+
+.mat-header-cell {
+  color: black;
+  border-color: darkgray;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 20px;
+}
+
+::ng-deep .mat-select-value {
+  color: black !important;
+}
+
+::ng-deep .mat-select-arrow {
+  color: gray !important;
+}
+
+mat-card {
+  background-color: white;
+  color: gray;
+}
+
+mat-form-field {
+  font-size: small;
+  width: 220px;
+  font-weight: 100 !important;
+}
+
+:host ::ng-deep .mat-form-field-flex {
+  background: rgb(245, 245, 245);
+}
+
+::ng-deep .mat-form-field-label {
+  color: black;
+}
+
+.eye-icon {
+  color: black;
+}
+
+::ng-deep .mat-form-field-infix {
+  color: black;
+}
+
+::ng-deep .mat-slide-toggle-content {
+  color: gray;
+}
+
+::ng-deep .mat-slide-toggle-bar {
+  background-color: lightgray;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: purple;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: purple;
+}
