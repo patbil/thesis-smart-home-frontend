@@ -1,4 +1,4 @@
-# Smart Home — Frontend (Thesis Project)
+# Smart Home Thesis — Frontend
 
 This repository contains the frontend implementation for an engineering thesis focused on smart-home systems. The application is a web-based interface for monitoring and controlling smart-home devices, visualizing real-time and historical data, and managing user interactions.
 
