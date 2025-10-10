@@ -2,6 +2,9 @@
 
 This repository contains the frontend implementation for an engineering thesis focused on smart-home systems. The application is a web-based interface for monitoring and controlling smart-home devices, visualizing real-time and historical data, and managing user interactions.
 
+## Year of Completion
+2022
+
 ## Thesis summary
 
 - **Objective:** Design and implement a modern frontend for a smart-home platform that allows daily users to control devices, monitor environmental conditions, and view historical data through an intuitive interface.
